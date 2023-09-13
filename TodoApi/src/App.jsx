@@ -2,12 +2,7 @@ import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import "./App.css";
-import {
-  fetchTodos,
-  updateTodos,
-  clearTodos,
-  createNewUser,
-} from "./api/task";
+import { fetchTodos, addTodo, deleteTodo } from "./api/task";
 
 const App = () => {
   const [todos, setTodos] = useState([]);
@@ -24,21 +19,21 @@ const App = () => {
 
   const sendTodos = async (data) => {
     try {
-      await updateTodos(data);
+      await addTodo(data); 
       loadTodos();
     } catch (error) {
       alert(error.message);
     }
   };
 
-  const handleDelete = (id) => {
-    const data = todos.map((el, index) => {
-      if (id === index) {
-        el.done = true;
-      }
-      return el;
-    });
-    sendTodos(data);
+  const handleDelete = (index) => {
+    const todoId = todos[index].id; 
+    try {
+      deleteTodo(todoId); 
+      loadTodos();
+    } catch (error) {
+      alert(error.message);
+    }
   };
 
   const handleClear = async () => {
@@ -66,8 +61,7 @@ const App = () => {
             onKeyDown={async (e) => {
               if (e.key === "Enter") {
                 const todoObject = { label: inputValue, done: false };
-                const data = [...todos, todoObject];
-                await sendTodos(data);
+                await sendTodos(todoObject); 
                 setInputValue("");
               }
             }}

@@ -9,38 +9,42 @@ export const fetchTodos = async () => {
   return response.json();
 };
 
-export const updateTodos = async (data) => {
-  const response = await fetch(API_BASE_URL, {
-    method: "PUT",
-    body: JSON.stringify(data),
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
-  if (!response.ok) {
-    throw new Error("Error al enviar los todos");
+
+export const addTodo = async (newTodo) => {
+  try {
+    // Obtener la lista actual de tareas del servidor
+    const currentTodos = await fetchTodos();
+
+    // Agregar la nueva tarea a la lista
+    const updatedTodos = [...currentTodos, newTodo];
+
+    // Enviar la lista actualizada al servidor utilizando PUT
+    const response = await fetch(API_BASE_URL, {
+      method: "PUT",
+      body: JSON.stringify(updatedTodos),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error("Error al agregar una nueva tarea");
+    }
+  } catch (error) {
+    console.error(error);
+    throw error;
   }
 };
 
-export const clearTodos = async () => {
-  const response = await fetch(API_BASE_URL, {
+
+export const deleteTodo = async (todoId) => {
+  const response = await fetch(`${API_BASE_URL}/${todoId}`, {
     method: "DELETE",
   });
   if (!response.ok) {
-    throw new Error("Error al borrar los datos");
+    throw new Error("Error al eliminar la tarea");
   }
 };
 
-export const createNewUser = async () => {
-  const response = await fetch(API_BASE_URL, {
-    method: "POST",
-    body: JSON.stringify([]),
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
-  if (!response.ok) {
-    throw new Error("Ha ocurrido un error al crear el nuevo usuario");
-  }
-};
+
 
