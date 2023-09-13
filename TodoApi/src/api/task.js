@@ -1,5 +1,5 @@
 
-const API_BASE_URL = "https://assets.breatheco.de/apis/fake/todos/user/goldor";
+const API_BASE_URL = "https://playground.4geeks.com/apis/fake/todos/user/goldor";
 
 export const fetchTodos = async () => {
   const response = await fetch(API_BASE_URL);
