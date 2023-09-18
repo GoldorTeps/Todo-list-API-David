@@ -47,4 +47,12 @@ export const deleteTodo = async (todoId) => {
 };
 
 
+export const clearTodos = async () => {
+  const response = await fetch(API_BASE_URL, {
+    method: "DELETE",
+  });
+  if (!response.ok) {
+    throw new Error("Error al eliminar todas las  tareas");
+  }
+};
 

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import "./App.css";
-import { fetchTodos, addTodo, deleteTodo } from "./api/task";
+import { fetchTodos, addTodo, deleteTodo, clearTodos } from "./api/task";
 
 const App = () => {
   const [todos, setTodos] = useState([]);
