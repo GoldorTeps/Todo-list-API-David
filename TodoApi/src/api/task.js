@@ -37,9 +37,24 @@ export const addTodo = async (newTodo) => {
 };
 
 
-export const deleteTodo = async (todoId) => {
-  const response = await fetch(`${API_BASE_URL}/${todoId}`, {
-    method: "DELETE",
+export const deleteTodo = async (todoLabel) => {
+
+  const currentTodos = await fetchTodos();
+
+  const updatedTodos = currentTodos.filter ((task)=>{
+    if (task.label === todoLabel) {
+      return false
+    }
+    return true
+  })
+
+
+  const response = await fetch(API_BASE_URL, {
+    method: "PUT",
+    body: JSON.stringify(updatedTodos),
+    headers: {
+      "Content-Type": "application/json",
+    },
   });
   if (!response.ok) {
     throw new Error("Error al eliminar la tarea");

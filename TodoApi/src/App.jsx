@@ -26,10 +26,10 @@ const App = () => {
     }
   };
 
-  const handleDelete = (index) => {
-    const todoId = todos[index].id; 
+  const handleDelete = async (index) => {
+    const todoId = todos[index].label; 
     try {
-      deleteTodo(todoId); 
+      await deleteTodo(todoId); 
       loadTodos();
     } catch (error) {
       alert(error.message);
